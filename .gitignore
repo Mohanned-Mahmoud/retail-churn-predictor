@@ -1,0 +1,64 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64
+bin
+sdist/
+var/
+wheels/
+share/python-wheels/
+^*_{setuptools}.egg-info
+
+# PyInstaller
+# Normally appended to the *.spec file by a tool on my system:
+# Final and Spec files
+*.spec
+*.exe
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+.project
+.pydevproject
+.settings/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Project specific ignores
+.claude/
+*.log
+
+# Data and Models (Optional: uncomment if you prefer not to track large binary files)
+# *.pkl
+# *.csv
+# *.pdf
+# *.png

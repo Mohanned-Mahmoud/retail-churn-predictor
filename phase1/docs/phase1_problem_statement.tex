@@ -1,0 +1,240 @@
+\documentclass[12pt, a4paper]{article}
+
+% ─── Packages ───────────────────────────────────────────────
+\usepackage[margin=2.2cm]{geometry}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+% ─── Colors ─────────────────────────────────────────────────
+\definecolor{accent}{HTML}{185FA5}
+\definecolor{accent2}{HTML}{E85D24}
+\definecolor{lightbg}{HTML}{EEF4FB}
+\definecolor{midgray}{HTML}{888780}
+\definecolor{darktext}{HTML}{2C2C2A}
+\definecolor{rowalt}{HTML}{F5F8FC}
+\definecolor{tableborder}{HTML}{D3D1C7}
+
+% ─── Hyperref ────────────────────────────────────────────────
+\hypersetup{
+    colorlinks=true,
+    linkcolor=accent,
+    urlcolor=accent,
+    pdftitle={IDSS Phase 1 - Problem Statement},
+    pdfauthor={Your Team Name}
+}
+
+% ─── Section Formatting ─────────────────────────────────────
+\titleformat{\section}
+  {\large\bfseries\color{accent}}
+  {\thesection.}{0.5em}{}
+  [\vspace{-4pt}\textcolor{tableborder}{\rule{\linewidth}{0.4pt}}\vspace{2pt}]
+
+\titleformat{\subsection}
+  {\normalsize\bfseries\color{darktext}}
+  {\thesubsection.}{0.5em}{}
+
+\titlespacing{\section}{0pt}{10pt}{4pt}
+\titlespacing{\subsection}{0pt}{6pt}{2pt}
+
+% ─── Table Column Types ──────────────────────────────────────
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\setlength{\extrarowheight}{1pt}
+\setlength{\parskip}{3pt}
+\setlength{\parindent}{0pt}
+
+% ─── Header/Footer ───────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\color{tableborder}\hrule width\headwidth height\headrulewidth}
+\fancyhead[L]{\small\color{midgray} IDSS Final Project --- Phase 1}
+\fancyhead[R]{\small\color{midgray} Online Retail Dataset}
+\fancyfoot[C]{\small\color{midgray}\thepage}
+
+% ─── Table Header Style ──────────────────────────────────────
+\newcommand{\thead}[1]{\textcolor{white}{\textbf{#1}}}
+
+% ─── Bullet List Style ───────────────────────────────────────
+\setlist[itemize]{
+    leftmargin=1.4em,
+  itemsep=1pt,
+  topsep=2pt,
+    parsep=0pt
+}
+
+% ════════════════════════════════════════════════════════════
+\begin{document}
+% ════════════════════════════════════════════════════════════
+
+% ─── Title Block ─────────────────────────────────────────────
+{\color{midgray}\small IDSS Final Project --- Phase 1}\\[2pt]
+{\color{accent}\LARGE\bfseries Problem Statement \& Exploratory Findings}\\[4pt]
+{\color{midgray}\small Online Retail Dataset (UCI ML Repository ID=352) \quad|\quad Customer Churn \& Purchase Behaviour Prediction}\\[2pt]
+\textcolor{tableborder}{\rule{\linewidth}{0.5pt}}
+
+\vspace{4pt}
+
+% ════════════════════════════════════════════════════════════
+\section{Real-World Problem}
+% ════════════════════════════════════════════════════════════
+
+A UK-based online gift retailer sells exclusively via non-store channels. Despite holding a growing
+transaction history, the business currently applies identical post-purchase treatment to all
+customers, leaving significant retention opportunities unexploited. The core problem is:
+\textbf{the business cannot identify which customers are drifting toward churn} until it is too
+late to intervene cost-effectively.
+
+The proposed IDSS addresses this by predicting, at the customer level, the probability of
+churn---defined as no purchase in the 90 days preceding the observation date---using
+transactional RFM signals and engineered behavioural features.
+
+% ════════════════════════════════════════════════════════════
+\section{Stakeholders \& Decision-Making Needs}
+% ════════════════════════════════════════════════════════════
+
+\vspace{4pt}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{
+  >{\columncolor{lightbg}}L{3.3cm}
+  Y
+  Y
+}
+\rowcolor{accent}
+\thead{Stakeholder} & \thead{Primary Decision} & \thead{IDSS Output Needed} \\
+Marketing Manager &
+  Which customers to target with retention campaigns? &
+  Churn probability score + risk tier \\
+\rowcolor{rowalt}
+Customer Success &
+  Who needs proactive outreach this week? &
+  Daily ranked list of at-risk customers \\
+CFO / Finance &
+  What is our projected customer lifetime value? &
+  Segment-level projected CLV and risk-adjusted customer value \\
+\end{tabularx}
+
+% ════════════════════════════════════════════════════════════
+\section{Business Value}
+% ════════════════════════════════════════════════════════════
+
+Retaining an existing customer costs 5--7$\times$ less than acquiring a new one.
+The dataset spans 12 months (December 2010 -- December 2011) with \textbf{4,338 unique
+customers} across \textbf{37 countries}.
+
+\begin{itemize}
+    \item Even a \textbf{10\% improvement} in retention can yield an estimated
+          \textbf{\pounds 50,000--\pounds 200,000 in additional annual revenue}
+          (estimated from average order value and purchase frequency).
+    \item Targeted campaigns directed by churn scores reduce wasted outreach by an estimated
+          \textbf{30--40\%}, improving marketing ROI.
+    \item Identification of high-value at-risk customers enables differential treatment
+          (personalised discounts, priority service), protecting the highest-margin segment.
+\end{itemize}
+
+% ════════════════════════════════════════════════════════════
+\section{IDSS Objective \& Task Definition}
+% ════════════════════════════════════════════════════════════
+
+\textbf{Task Type:} Binary Classification
+
+Each customer is labelled as \textbf{Churned = 1} (no purchase in the final 90 days) or
+\textbf{Active = 0}. The model outputs a probability score in $[0,\,1]$ and a binary label.
+
+\vspace{6pt}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\linewidth}{L{3.8cm} Y}
+\rowcolor{accent}
+\thead{Metric} & \thead{Justification} \\
+F1-Score \emph{(primary)} &
+  Balances false negatives (missed churners $\to$ lost revenue) and false positives (wasted
+  marketing spend). Best suited for imbalanced binary business problems. \\
+\rowcolor{rowalt}
+ROC-AUC \emph{(secondary)} &
+  Threshold-agnostic measure of discrimination---allows the business to set its own
+  risk tolerance post-deployment. \\
+Recall \emph{(tertiary)} &
+  Slightly preferred: a false negative costs $\approx$\pounds 300 in lost revenue vs.\
+  $\approx$\pounds 2--5 per false positive in campaign spend. \\
+\end{tabularx}
+
+\vspace{4pt}
+
+% ════════════════════════════════════════════════════════════
+\section{Dataset Overview}
+% ════════════════════════════════════════════════════════════
+
+The \textbf{Online Retail dataset} (UCI ID=352) contains 541,909 transactions from a UK-based
+non-store retailer (1 December 2010 -- 9 December 2011), exposed as 6 feature columns plus
+\texttt{InvoiceNo} and \texttt{StockCode} as index columns. After removing returns,
+cancellations, and anonymous transactions (no CustomerID), \textbf{392,669 valid rows} across
+\textbf{4,338 unique customers} remain for modelling.
+
+\vspace{6pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\linewidth}{L{2.8cm} L{2.3cm} Y}
+\rowcolor{accent}
+\thead{Feature} & \thead{Type} & \thead{Notes / Quality Issues} \\
+InvoiceNo      & Categorical & Index column. Prefix \texttt{C} = cancellation $\to$ excluded \\
+\rowcolor{rowalt}
+StockCode      & Categorical & Index column. Product ID; some codes are service charges \\
+Description    & Text        & $\approx$0.3\% missing $\to$ rows dropped \\
+\rowcolor{rowalt}
+Quantity       & Numeric     & 10,600 rows negative (returns) $\to$ excluded \\
+InvoiceDate    & Datetime    & Stored as string $\to$ converted to \texttt{datetime} \\
+\rowcolor{rowalt}
+UnitPrice      & Numeric     & Rows with UnitPrice $\leq 0$ $\to$ excluded \\
+CustomerID     & Numeric     & $\approx$25\% missing (guest purchases) $\to$ excluded \\
+\rowcolor{rowalt}
+Country        & Categorical & \textbf{37} countries represented; $\approx$91\% UK \\
+\end{tabularx}
+
+% ════════════════════════════════════════════════════════════
+\section{Top 3 Patterns \& Business Significance}
+% ════════════════════════════════════════════════════════════
+
+\subsection{Recency is the Dominant Churn Signal}
+
+Recency (days since last purchase) shows the strongest correlation with the churn label
+($|r| \approx 0.65$). Active customers have a mean recency of \textbf{32 days} vs.\
+\textbf{214 days} for churned customers (median: 25 vs.\ 205 days).
+\textit{Business implication:} A simple recency-based trigger---an automated re-engagement
+email at day 60---could preemptively reach at-risk customers before they pass the churn
+threshold.
+
+\subsection{Frequency $\times$ Monetary Identifies VIP Customers}
+
+Active customers average \textbf{121 invoices} and \textbf{\pounds 2,726} in spend vs.\
+\textbf{33 invoices} and \textbf{\pounds 714} for churned customers. Frequency and monetary
+spend are highly correlated ($r \approx 0.70$). \textit{Business implication:} A loyalty
+programme targeting the top frequency quartile protects the highest-value segment and
+maximises retention ROI.
+
+\subsection{Geographic Variation in Churn Rate}
+
+The dataset covers \textbf{37 countries}, with $\approx$91\% of customers based in the UK.
+Several non-UK markets exhibit churn rates 10--20 percentage points above the overall mean.
+\textit{Business implication:} Country-specific retention strategies (localised
+communications, free-return promotions for high-churn markets) are warranted before broad
+international marketing investment.
+
+\vspace{\fill}
+\textcolor{tableborder}{\rule{\linewidth}{0.4pt}}
+{\small\color{midgray}
+Phase 1 of 5 \quad|\quad IDSS Final Project \quad|\quad
+Due: Saturday 2 May \quad|\quad Dataset: UCI Online Retail (ID=352)}
+
+\end{document}
