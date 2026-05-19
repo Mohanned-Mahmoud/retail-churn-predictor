@@ -55,6 +55,7 @@ Thumbs.db
 
 # Project specific ignores
 .claude/
+.env
 *.log
 
 # Data and Models (Optional: uncomment if you prefer not to track large binary files)

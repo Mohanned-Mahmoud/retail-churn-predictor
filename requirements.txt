@@ -5,3 +5,14 @@ scikit-learn
 joblib
 plotly
 reportlab
+joblib
+numpy
+pandas
+plotly
+reportlab
+scikit-learn
+streamlit
+fastapi
+python-multipart
+uvicorn[standard]
+google-genai
