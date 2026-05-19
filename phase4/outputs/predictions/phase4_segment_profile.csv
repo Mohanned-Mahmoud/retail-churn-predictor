@@ -1,4 +1,4 @@
-RiskTier,Recency,Frequency,Monetary,AvgOrderValue
-Low Risk,39.28,181.17,4365.1,27.15
-Medium Risk,113.8,41.61,1052.97,304.57
-High Risk,163.52,12.32,257.3,34.38
+RiskTier,Customers,Recency,Frequency,Monetary,AvgOrderValue,Tenure
+Low Risk,383,39.28,181.17,4365.1,27.15,257.03
+Medium Risk,289,113.8,41.61,1052.97,304.57,52.1
+High Risk,196,163.52,12.32,257.3,34.38,7.85
