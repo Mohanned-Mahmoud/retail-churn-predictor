@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { CustomerFormData } from "@/components/InputForm";
 import { PredictionResult } from "@/app/page";
+import { apiRequest } from "@/lib/api";
 
 interface Props {
   customer: CustomerFormData;
@@ -61,17 +62,11 @@ export default function XAIExplanation({ customer, result }: Props) {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/explain", {
+      const res = await apiRequest("/explain", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ customer, prediction: result }),
       });
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.detail || "Explanation failed");
-      }
-      const data = await res.json();
-      setExplanation(parseExplanation(data.explanation));
+      setExplanation(parseExplanation(res.explanation));
       setGenerated(true);
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Unknown error");

@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import PageLayout from "@/components/PageLayout";
+import { apiRequest } from "@/lib/api";
 
 interface BatchResult {
   customer_id?: string | number;
@@ -98,12 +99,8 @@ export default function BatchPage() {
     try {
       const form = new FormData();
       form.append("file", file);
-      const res = await fetch("/api/batch-predict", { method: "POST", body: form });
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.detail || "Upload failed");
-      }
-      setResponse(await res.json());
+      const res = await apiRequest("/batch-predict", { method: "POST", body: form });
+      setResponse(res);
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Unknown error");
     } finally {

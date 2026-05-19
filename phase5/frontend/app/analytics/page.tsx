@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import PageLayout from "@/components/PageLayout";
+import { apiRequest } from "@/lib/api";
 import {
   PieChart,
   Pie,
@@ -105,8 +106,7 @@ export default function AnalyticsPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/analytics")
-      .then((r) => r.json())
+    apiRequest("/analytics")
       .then(setData)
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));

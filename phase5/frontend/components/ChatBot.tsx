@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { apiRequest } from "@/lib/api";
 
 interface Message {
   role: "user" | "assistant";
@@ -65,17 +66,11 @@ export default function ChatBot() {
     setShowSuggestions(false);
 
     try {
-      const res = await fetch("/api/chat", {
+      const res = await apiRequest("/chat", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: updated }),
       });
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.detail || "Chat failed");
-      }
-      const data = await res.json();
-      setMessages((prev) => [...prev, { role: "assistant", content: data.response }]);
+      setMessages((prev) => [...prev, { role: "assistant", content: res.response }]);
     } catch (e: unknown) {
       setMessages((prev) => [
         ...prev,

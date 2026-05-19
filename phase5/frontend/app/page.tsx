@@ -6,6 +6,7 @@ import InputForm, { CustomerFormData } from "@/components/InputForm";
 import ResultsCard from "@/components/ResultsCard";
 import FeatureChart from "@/components/FeatureChart";
 import XAIExplanation from "@/components/XAIExplanation";
+import { apiRequest } from "@/lib/api";
 
 const NAV_LINKS = [
   { href: "/analytics", label: "Analytics", icon: "📊" },
@@ -37,16 +38,10 @@ export default function Home() {
     setResult(null);
     setFormData(null);
     try {
-      const res = await fetch("/api/predict", {
+      const json = await apiRequest("/predict", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.detail || "Prediction failed");
-      }
-      const json = await res.json();
       setResult(json);
       setFormData(data);
     } catch (e: unknown) {

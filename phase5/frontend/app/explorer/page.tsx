@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import PageLayout from "@/components/PageLayout";
+import { apiRequest } from "@/lib/api";
 
 interface Customer {
   customer_id: number;
@@ -72,9 +73,8 @@ export default function ExplorerPage() {
     if (search) params.set("search", search);
 
     try {
-      const res = await fetch(`/api/customers?${params}`);
-      if (!res.ok) throw new Error("Failed to load customers");
-      setData(await res.json());
+      const res = await apiRequest(`/customers?${params}`);
+      setData(res);
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Unknown error");
     } finally {
