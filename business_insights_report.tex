@@ -1,0 +1,186 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- Packages ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{caption}
+
+% --- Styling ---
+\definecolor{darkblue}{rgb}{0.0, 0.0, 0.5}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=darkblue,
+    urlcolor=darkblue,
+    citecolor=darkblue
+}
+
+\titleformat{\section}{\large\bfseries\color{darkblue}}{\thesection}{1em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+
+% --- Document Info ---
+\title{
+    \vspace{-2cm}
+    \huge \textbf{Business Insights \& Explainability Report} \\
+    \vspace{0.5cm}
+    \large Phase 4: Customer Churn Predictor
+}
+\author{Data Science Team}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Executive Summary}
+
+We have successfully deployed a predictive AI model designed to identify customers at risk of leaving our service (churning). The model uses a \textit{Logistic Regression} approach, which provides a transparent and reliable way to rank customers by risk.
+
+\subsection{How reliable is the model?}
+To ensure the business can trust these predictions, we tested the model on a "hidden" set of data it had never seen before. The results are strong:
+\begin{itemize}
+    \item \textbf{Capture Rate (Recall) $\approx 82\%$}: The model successfully identifies over 80\% of all customers who actually churn. This means we have a high probability of catching "at-risk" customers before they leave.
+    \item \textbf{Overall Accuracy $\approx 74\%$}: The model correctly predicts whether a customer will stay or leave roughly 3 out of 4 times.
+    \item \textbf{Ranking Quality (ROC-AUC) $\approx 0.81$}: The model is very effective at distinguishing between a "loyal" customer and a "high-risk" customer, allowing us to prioritize our marketing spend efficiently.
+\end{itemize}
+
+\section{What Drives Customer Churn?}
+
+We used a technique called \textbf{SHAP}, which acts like a "magnifying glass" to show exactly why the AI makes a specific prediction. Instead of a black box, we can now see the exact contribution of each customer behavior.
+
+\subsection{The Top 5 Risk Factors}
+The AI identified five primary behaviors that signal whether a customer is likely to stay or leave:
+
+\begin{enumerate}
+    \item \textbf{Purchase Frequency (Strongest Signal):} This is the most critical indicator. Customers who shop more often are significantly less likely to leave. A sudden drop in how often a customer visits is the earliest warning sign of attrition.
+    \item \textbf{Monthly Revenue Generation:} Customers who generate a consistent, high amount of revenue per month are generally more stable and loyal.
+    \item \textbf{Total Lifetime Spend (Monetary Value):} High-spending customers tend to have a deeper relationship with the brand and a higher "switching cost," making them more likely to stay.
+    \item \textbf{Customer Tenure:} The longer a customer has been with us, the more stable they become. New customers are the most volatile and are most likely to churn early.
+    \item \textbf{Variety of Products (NumProducts):} Customers who buy a wider range of different products are "stickier." Those who only buy one type of item are more vulnerable to competitor offers.
+\end{enumerate}
+
+% --- PLACEHOLDER: Insert plot showing SHAP Bar Plot here ---
+\begin{figure}[htbp]
+    \centering
+    %\includegraphics[width=0.7\textwidth]{phase4_shap_bar.png}
+    \fbox{Insert: phase4\_shap\_bar.png}
+    \caption{Global Feature Importance: Which factors most influence the AI's decision?}
+\end{figure}
+
+\newpage
+
+\section{Understanding the AI: Real-World Cases}
+
+To demonstrate how the model works in practice, we analyzed three specific customer scenarios:
+
+\subsection{Case A: The Accurate Warning (Correct Positive)}
+The AI predicted this customer would churn, and they did.
+\textbf{Why?} The model detected a "perfect storm" of warning signs: the customer stopped shopping entirely (High Recency) and had a very low purchase frequency. The AI correctly recognized that the lack of recent engagement meant the customer had already mentally "checked out."
+
+\subsection{Case B: The Loyal Asset (Correct Negative)}
+The AI predicted this customer would stay, and they remained active.
+\textbf{Why?} The model saw strong evidence of stability. The customer shops almost weekly and has been with us for years. Even if their individual order values are small, their \textit{habitual} behavior signals extreme loyalty.
+
+\subsection{Case C: The "False Alarm" (Misclassification)}
+The AI flagged this customer as high-risk, but they actually stayed.
+\textbf{Why?} This is a "Seasonal Buyer." They make huge purchases only a few times a year. The AI saw a long gap between orders and mistook it for abandonment. This highlights the need for us to identify "bulk buyers" to avoid wasting discounts on them.
+
+% --- PLACEHOLDER: Insert SHAP Waterfall Plots ---
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.3\textwidth}
+        \centering
+        %\includegraphics[width=\textwidth]{phase4_correct_positive_waterfall.png}
+        \fbox{Case A Plot}
+        \caption{Correct Churn}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.3\textwidth}
+        \centering
+        %\includegraphics[width=\textwidth]{phase4_correct_negative_waterfall.png}
+        \fbox{Case B Plot}
+        \caption{Correct Stay}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.3\textwidth}
+        \centering
+        %\includegraphics[width=\textwidth]{phase4_misclassification_waterfall.png}
+        \fbox{Case C Plot}
+        \caption{False Alarm}
+    \end{minipage}
+\end{figure}
+
+\section{Customer Risk Segmentation}
+
+We have divided the customer base into three "Action Tiers" based on their probability of churning.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Business Profile by Risk Level}
+    \vspace{0.3cm}
+    \small
+    \begin{tabular}{lccccp{3cm}}
+        \toprule
+        \textbf{Risk Tier} & \textbf{Avg Recency} & \textbf{Avg Freq} & \textbf{Avg Total Spend} & \textbf{Avg Order Value} & \textbf{Business Profile} \\
+        \midrule
+        \textbf{Low Risk} & 39 days & 181.2 & £4,365 & £27 & \textbf{Champions:} Highly active, high value. \\
+        \addlinespace
+        \textbf{Medium Risk} & 114 days & 41.6 & £1,053 & £305 & \textbf{Drifting:} High value, but infrequent. \\
+        \addlinespace
+        \textbf{High Risk} & 164 days & 12.3 & £257 & £34 & \textbf{At-Risk:} Dormant and low value. \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+% --- PLACEHOLDER: Insert segment profiles plot ---
+\begin{figure}[htbp]
+    \centering
+    %\includegraphics[width=0.8\textwidth]{phase4_segment_profiles.png}
+    \fbox{Insert: phase4\_segment\_profiles.png}
+    \caption{Comparison of behavioral traits across risk tiers.}
+\end{figure}
+
+\newpage
+
+\section{Action Plan \& Roadmap}
+
+Based on the AI's evidence, we recommend the following four initiatives:
+
+\begin{description}[leftmargin=0em, labelsep=0.5em]
+    \item[\textbf{1. Immediate High-Risk Outreach}] \hfill \\
+    \textbf{Action:} Directly contact the "High Risk" segment within 24 hours via email/phone. \\
+    \textbf{Why:} This group shows the strongest warning signals. Fast intervention is the only way to prevent total loss. \\
+    \textbf{Priority:} \textbf{Critical} (Immediate).
+
+    \item[\textbf{ la. Medium-Risk Nurture Journey}] \hfill \\
+    \textbf{Action:} Implement an automated "We Miss You" email sequence with personalized offers. \\
+    \textbf{Why:} These customers aren't gone yet, but they are drifting. A gentle nudge can bring them back to "Low Risk." \\
+    \textbf{Priority:} \textbf{High} (Next 30 days).
+
+    \item[\textbf{3. New Customer "Safety Net" Onboarding}] \hfill \\
+    \textbf{Action:} Create a high-touch onboarding program for the first 90 days of a customer's life. \\
+    \textbf{Why:} The AI shows that new customers (low tenure) are the most volatile. Establishing habits early reduces churn. \\
+    \textbf{Priority:} \textbf{Medium} (Q2).
+
+    \item[\textbf{4. Regional Calibration Check}] \hfill \\
+    \textbf{Action:} Review model performance specifically for non-UK customers. \\
+    \textbf{Why:} Because our data is mostly UK-based, the AI might be slightly less accurate for international clients. \\
+    \textbf{Priority:} \textbf{Medium} (Quarterly Review).
+\end{description}
+
+\section{Ethical Considerations}
+
+To ensure the AI is used fairly and responsibly, we have identified two key areas of focus:
+
+\begin{itemize}
+    \item \textbf{Geographic Fairness:} Since the majority of our customers are in the UK, there is a risk the model "ignores" the nuances of international markets. We will monitor "Error Rates" by country to ensure non-UK customers aren't unfairly ignored or misclassified.
+    \item \textbf{New Customer Bias:} Customers with very short histories can look "risky" simply because the AI doesn't have enough data on them. We will implement a "Confidence Flag" for new accounts so we don't send aggressive "win-back" offers to people who just joined.
+\end{itemize}
+
+\end{document}
