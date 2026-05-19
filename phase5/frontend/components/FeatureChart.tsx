@@ -70,7 +70,7 @@ function CustomTooltip({ active, payload }: { active?: boolean; payload?: Toolti
 }
 
 function CustomYAxisTick({ x, y, payload }: { x?: number; y?: number; payload?: { value: string } }) {
-  if (!payload) return null;
+  if (!payload) return <></>;
   return (
     <text
       x={x}
